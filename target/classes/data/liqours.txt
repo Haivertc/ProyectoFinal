@@ -1,0 +1,3 @@
+Whisky A;Whisky;Brand A;40.0;Escocia
+Rum B;Rum;Brand B;35.0;Jamaica
+Gin C;Gin;Brand C;45.0;Inglaterra

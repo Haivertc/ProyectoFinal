@@ -48,7 +48,8 @@ public class FilePlain {
 	*/
 	public void writeFile(String nombreArchivo, String content) {
 		String rutaAbsoluta = 
-				"C:/Users/ASUS/OneDrive/Documentos/WEB/Library/Library/src/main/resources/data/" + nombreArchivo;
+//				"C:/Users/ASUS/OneDrive/Documentos/WEB/Library/Library/src/main/resources/data/" + nombreArchivo;
+				"C:/Users/ASUS/OneDrive/Documentos/eclipse_work/ProyectoFinal/src/main/resources/data" + nombreArchivo;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaAbsoluta))) {
             writer.write(content);
         } catch (IOException e) {

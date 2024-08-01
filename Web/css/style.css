@@ -1,0 +1,65 @@
+* {
+    margin: 0; /* Elimina el margen predeterminado de todos los elementos */
+    padding: 0; /* Elimina el relleno predeterminado de todos los elementos */
+}
+
+form {
+    width: 350px; /* Establece el ancho del formulario a 350px */
+    padding: 20px; /* Añade un relleno de 20px dentro del formulario */
+    background-color: #c8102e; /* Establece el color de fondo rojo */
+    margin: 50px auto; /* Centra horizontalmente el formulario con un margen de 50px en la parte superior e inferior */
+    border-top-right-radius: 20px; /* Redondea la esquina superior derecha del formulario con un radio de 20px */
+    border-bottom-left-radius: 20px; /* Redondea la esquina inferior izquierda del formulario con un radio de 20px */
+    box-shadow: -10px 20px 15px 10px gray; /* Añade una sombra al formulario con desplazamientos y difuminados especificados */
+    position: relative; /* Asegura que el logo se posicione correctamente dentro del formulario */
+}
+
+.logo-container {
+    text-align: center; /* Centra el logo horizontalmente dentro del contenedor */
+    margin-bottom: 20px; /* Añade un margen inferior de 20px para separar el logo del contenido del formulario */
+}
+
+.logo-container img {
+    max-width: 80px; /* Establece el ancho máximo del logo a 80px */
+    height: auto; /* Mantiene la proporción del logo */
+    display: block; /* Asegura que la imagen se muestre como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente dentro del contenedor */
+}
+
+h1 {
+    color: white; /* Establece el color del texto del encabezado a blanco */
+    text-align: center; /* Centra horizontalmente el texto del encabezado */
+    margin-top: 10px; /* Añade un margen superior de 10px al encabezado */
+    margin-bottom: 30px; /* Añade un margen inferior de 30px al encabezado */
+}
+
+input {
+    font-size: 16px; /* Establece el tamaño de la fuente de los inputs a 16px */
+    padding: 8px; /* Añade un relleno de 8px dentro de los inputs */
+    display: block; /* Establece la visualización de los inputs como bloque */
+    margin: 10px auto; /* Centra horizontalmente los inputs con un margen de 10px */
+    width: calc(100% - 20px); /* Ajusta el ancho de los inputs para que se acomoden dentro del formulario */
+}
+
+label {
+    color: white; /* Establece el color del texto de las etiquetas a blanco */
+    font-size: 20px; /* Establece el tamaño de la fuente de las etiquetas a 20px */
+    display: block; /* Hace que las etiquetas se muestren como elementos de bloque */
+    margin: 15px 0; /* Añade un margen de 15px arriba y abajo de las etiquetas */
+    text-align: center; /* Centra horizontalmente el texto de las etiquetas */
+}
+
+input[type='button'] {
+    width: 100px; /* Establece el ancho de los botones a 100px */
+    margin-top: 20px; /* Añade un margen superior de 20px a los botones */
+    font-size: 20px; /* Establece el tamaño de la fuente de los botones a 20px */
+    display: block; /* Hace que los botones se muestren como elementos de bloque */
+    background-color: #ff5733; /* Asigna un color de fondo naranja a los botones */
+    color: white; /* Establece el color del texto de los botones a blanco */
+    cursor: pointer; /* Cambia el cursor a un puntero cuando se pasa sobre los botones */
+    border: none; /* Elimina el borde predeterminado de los botones */
+}
+
+input[type='button']:hover {
+    background-color: #c70039; /* Cambia el color de fondo de los botones a rojo oscuro cuando el ratón está sobre ellos */
+}

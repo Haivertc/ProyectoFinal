@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import co.edu.uptc.management.liqour.dto.LiqourDTO;
 import co.edu.uptc.management.persistence.ManagementPersistenceLiqour;
 
-@Path("/ManagementLiqour")
+@Path("/ManagementLiqour")	
 public class ManagementLiqour {
 
 	public static ManagementPersistenceLiqour managementPersistenceLiqour = new ManagementPersistenceLiqour();
