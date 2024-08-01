@@ -30,7 +30,7 @@ function loadLiqours() {
 
     const btnAdd = document.createElement('a');
     btnAdd.className = 'btn btn-primary';
-    btnAdd.href = './addliquor.html'; // Asegúrate de tener esta página en tu proyecto
+    btnAdd.href = './addliqour.html';
 
     const imgAdd = document.createElement('img');
     imgAdd.src = 'resources/Liqour_a.png';
@@ -51,9 +51,9 @@ function loadLiqours() {
     fetch('http://localhost:8080/ProyectoFinal/rest/ManagementLiqour/getLiqours')
     .then(response => response.json())
     .then((data) => {
-        console.log("Datos de licores:", data); // Verifica que los datos de licores se están obteniendo correctamente
+        console.log("Datos de licores:", data); 
         const content = document.getElementById('content');
-        data.forEach(liquor => {
+        data.forEach(liqour => {
             const card = document.createElement('div');
             card.className = 'card';
 
@@ -63,52 +63,70 @@ function loadLiqours() {
             /** Se hace la creación de cada componente */
             const name = document.createElement('h2');
             name.className = 'card-title';
-            name.textContent = liquor.name;
+            name.textContent = liqour.name;
 
             const type = document.createElement('p');
             type.className = 'card-text';
-            type.textContent = `Tipo: ${liquor.type}`;
+            type.textContent = `Tipo: ${liqour.type}`;
 
             const brand = document.createElement('p');
             brand.className = 'card-text';
-            brand.textContent = `Marca: ${liquor.brand}`;
+            brand.textContent = `Marca: ${liqour.brand}`;
 
             const alcoholContent = document.createElement('p');
             alcoholContent.className = 'card-text';
-            alcoholContent.textContent = `Contenido de alcohol: ${liquor.alcoholContent}`;
+            alcoholContent.textContent = `Contenido de alcohol: ${liqour.alcoholContent}`;
 
             const countryOfOrigin = document.createElement('p');
             countryOfOrigin.className = 'card-text';
-            countryOfOrigin.textContent = `País de origen: ${liquor.countryOfOrigin}`;
+            countryOfOrigin.textContent = `País de origen: ${liqour.countryOfOrigin}`;
+
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'button-group';
 
             const btnEliminar = document.createElement('button');
             btnEliminar.className = 'btn-danger';
-            btnEliminar.id = `btn-delete-${liquor.name}`;
+            btnEliminar.id = `btn-delete-${liqour.name}`;
             btnEliminar.textContent = `Eliminar`;
-            btnEliminar.setAttribute('data-name', liquor.name);
+            btnEliminar.setAttribute('data-name', liqour.name);
 
             btnEliminar.addEventListener('click', function() {
-                const liquorName = this.getAttribute('data-name');
-                deleteLiquorByName(liquorName);
+                const liqourName = this.getAttribute('data-name');
+                deleteLiqourByName(liqourName);
             });
 
             const btnActualizar = document.createElement('a');
             btnActualizar.className = 'btn-success margin';
-            btnActualizar.id = `btn-update-${liquor.name}`;
+            btnActualizar.id = `btn-update-${liqour.name}`;
             btnActualizar.textContent = `Actualizar`;
 
             btnActualizar.addEventListener('click', function() {
-                localStorage.setItem("liquorData", JSON.stringify(liquor));
+                localStorage.setItem("liqourData", JSON.stringify(liqour));
                 window.location.href = "./updatepage.html";
             });
+
+            // Agregar el botón Consultar
+            const btnConsultar = document.createElement('a');
+            btnConsultar.className = 'btn-info margin';
+            btnConsultar.id = `btn-consult-${liqour.name}`;
+            btnConsultar.textContent = `Consultar`;
+
+            btnConsultar.addEventListener('click', function() {
+                localStorage.setItem("liqourData", JSON.stringify(liqour));
+                window.location.href = "./consultpage.html";
+            });
+
+            buttonGroup.appendChild(btnEliminar);
+            buttonGroup.appendChild(btnActualizar);
+            buttonGroup.appendChild(btnConsultar);
 
             cardBody.appendChild(name);
             cardBody.appendChild(type);
             cardBody.appendChild(brand);
             cardBody.appendChild(alcoholContent);
             cardBody.appendChild(countryOfOrigin);
-            cardBody.appendChild(btnEliminar);
-            cardBody.appendChild(btnActualizar);
+
+            cardBody.appendChild(buttonGroup);
 
             card.appendChild(cardBody);
             content.appendChild(card);
@@ -125,9 +143,9 @@ function cleanContent(){
     content.innerHTML = "";
 }
 
-function deleteLiquorByName(name){
+function deleteLiqourByName(name){
     console.log("Eliminando licor con nombre:", name);
-    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementLiqour/deleteLiquor?name=${name}`;
+    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementLiqour/deleteLiqour?name=${name}`;
     fetch(url, {
         method: 'DELETE'
     })

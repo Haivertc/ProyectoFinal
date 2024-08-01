@@ -1,4 +1,5 @@
 Whisky A;Whisky;Brand A;40.0;Escocia
 Rum B;Ron;Brand B;35.0;Jamaica
 Gin C;Gin;Brand C;45.0;Inglaterra
-Miche;Destilado;Flor de caña;25.0;Sogamoso
+Miche;Destilado;Flor de caña;25.0;Socota
+Agua Cristal;Agua;Cristal;0.0;Colombia
