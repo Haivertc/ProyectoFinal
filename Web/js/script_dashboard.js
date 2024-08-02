@@ -229,7 +229,7 @@ function loadSales() {
 
             btnActualizar.addEventListener('click', function() {
                 localStorage.setItem("saleData", JSON.stringify(sale));
-                window.location.href = "./updatepage.html";
+                window.location.href = "./updatepage_sale.html";
             });
 
             // Agregar el botón Consultar
@@ -240,7 +240,7 @@ function loadSales() {
 
             btnConsultar.addEventListener('click', function() {
                 localStorage.setItem("saleData", JSON.stringify(sale));
-                window.location.href = "./consultpage.html";
+                window.location.href = "./consultpage_sale.html";
             });
 
             buttonGroup.appendChild(btnEliminar);
