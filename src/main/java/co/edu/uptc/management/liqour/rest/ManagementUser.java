@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -44,6 +46,42 @@ public class ManagementUser {
     public List<UserDTO> getUsers() {
         return managementPersistenceUser.getListUserDTO();
     }
+	
+	@POST
+	@Path("/createUser")
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public UserDTO createUser(UserDTO userDTO) {
+	    if (managementPersistenceUser.getListUserDTO().add(userDTO)) {
+	        managementPersistenceUser.dumpFilePlain("users.txt");
+	        return userDTO;
+	    }
+	    return null;
+	}
+
+	@GET
+    @Path("/getUserByUsername")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public UserDTO getUserByUsername(@QueryParam("username") String username) {
+        for (UserDTO userDTO : managementPersistenceUser.getListUserDTO()) {
+            if (userDTO.getNameUser().equals(username)) {
+                return userDTO;
+            }
+        }
+        return null; // Puedes considerar retornar un Response con un status 404 si el usuario no se encuentra
+    }
+	
+	 @DELETE
+	    @Path("/deleteUser")
+	    @Produces({ MediaType.APPLICATION_JSON })
+	    public UserDTO deleteUser(@QueryParam("username") String username) {
+	        UserDTO userDTO = this.getUserByUsername(username);
+	        if (userDTO != null) {
+	            managementPersistenceUser.getListUserDTO().remove(userDTO);
+	            managementPersistenceUser.dumpFilePlain("users.txt");
+	        }
+	        return userDTO;
+	    }
 	
 	@GET
 	@Path("/validateUser")

@@ -287,7 +287,7 @@ function loadUsers() {
     btnAdd.href = './adduser.html';
 
     const imgAdd = document.createElement('img');
-    imgAdd.src = 'resources/User.png';
+    imgAdd.src = 'resources/user.png';
 
     const lblAdd = document.createElement('h3');
     lblAdd.textContent = '¡Puedes agregar nuevos usuarios!';
@@ -314,46 +314,28 @@ function loadUsers() {
             cardBody.className = 'card-body';
 
             /** Se hace la creación de cada componente */
-            const username = document.createElement('h2');
-            username.className = 'card-title';
-            username.textContent = `Nombre de usuario: ${user.username}`;
-
-            const email = document.createElement('p');
-            email.className = 'card-text';
-            email.textContent = `Correo electrónico: ${user.email}`;
-
-            const role = document.createElement('p');
-            role.className = 'card-text';
-            role.textContent = `Rol: ${user.role}`;
+            const nameUser = document.createElement('h2');
+            nameUser.className = 'card-title';
+            nameUser.textContent = `Nombre de usuario: ${user.nameUser}`;
 
             const buttonGroup = document.createElement('div');
             buttonGroup.className = 'button-group';
 
             const btnEliminar = document.createElement('button');
             btnEliminar.className = 'btn-danger';
-            btnEliminar.id = `btn-delete-${user.username}`;
+            btnEliminar.id = `btn-delete-${user.nameUser}`;
             btnEliminar.textContent = `Eliminar`;
-            btnEliminar.setAttribute('data-username', user.username);
+            btnEliminar.setAttribute('data-nameUser', user.nameUser);
 
             btnEliminar.addEventListener('click', function() {
-                const username = this.getAttribute('data-username');
-                deleteUserByUsername(username);
-            });
-
-            const btnActualizar = document.createElement('a');
-            btnActualizar.className = 'btn-success margin';
-            btnActualizar.id = `btn-update-user-${user.username}`;
-            btnActualizar.textContent = `Actualizar`;
-
-            btnActualizar.addEventListener('click', function() {
-                localStorage.setItem("userData", JSON.stringify(user));
-                window.location.href = "./updatepage_user.html";
+                const nameUser = this.getAttribute('data-nameUser');
+                deleteUserByUsername(nameUser);
             });
 
             // Agregar el botón Consultar
             const btnConsultar = document.createElement('a');
             btnConsultar.className = 'btn-info margin';
-            btnConsultar.id = `btn-consult-user-${user.username}`;
+            btnConsultar.id = `btn-consult-user-${user.nameUser}`;
             btnConsultar.textContent = `Consultar`;
 
             btnConsultar.addEventListener('click', function() {
@@ -362,13 +344,9 @@ function loadUsers() {
             });
 
             buttonGroup.appendChild(btnEliminar);
-            buttonGroup.appendChild(btnActualizar);
             buttonGroup.appendChild(btnConsultar);
 
-            cardBody.appendChild(username);
-            cardBody.appendChild(email);
-            cardBody.appendChild(role);
-
+            cardBody.appendChild(nameUser);
             cardBody.appendChild(buttonGroup);
 
             card.appendChild(cardBody);
@@ -379,6 +357,7 @@ function loadUsers() {
         console.error('Error:', error);
     });
 }
+
 
 function cleanContent(){
     console.log("Limpiando contenido");
@@ -429,5 +408,28 @@ function deleteSaleByLiqourName(liqourName) {
     .catch(error => {
         console.error('Ocurrió el siguiente error con la operación: ', error);
         alert('Error al eliminar la venta: ' + error.message);
+    });
+}
+
+function deleteUserByUsername(username) {
+    console.log("Eliminando usuario con nombre:", username);
+    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementUser/deleteUser?username=${encodeURIComponent(username)}`;
+    
+    fetch(url, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Ocurrió un error en la respuesta del servidor: ' + response.statusText);
+        }
+        return response.json(); // Asumiendo que la respuesta es JSON
+    })
+    .then(data => {
+        alert("Se eliminó el registro de usuario.");
+        loadUsers(); // Recargar la lista de usuarios después de eliminar
+    })
+    .catch(error => {
+        console.error('Ocurrió el siguiente error con la operación: ', error);
+        alert('Error al eliminar el usuario: ' + error.message);
     });
 }
