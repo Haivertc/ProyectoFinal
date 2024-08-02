@@ -17,6 +17,12 @@ document.getElementById('button-liqours').addEventListener('click', function(eve
     loadLiqours();
 });
 
+document.getElementById('button-borrow').addEventListener('click', function(event) {
+    event.preventDefault(); /* Evita el comportamiento predeterminado */
+    console.log("Botón de ventas clickeado");
+    loadSales();
+});
+
 function loadLiqours() {
     console.log("Cargando licores");
 
@@ -137,6 +143,127 @@ function loadLiqours() {
     });
 }
 
+function loadSales() {
+    console.log("Cargando ventas");
+
+    const content = document.getElementById('content');
+    cleanContent();
+
+    const cardAdd = document.createElement('div');
+    cardAdd.className = 'card';
+
+    const cardBodyAdd = document.createElement('div');
+    cardBodyAdd.className = 'card-body';
+
+    const btnAdd = document.createElement('a');
+    btnAdd.className = 'btn btn-primary';
+    btnAdd.href = './addsale.html';
+
+    const imgAdd = document.createElement('img');
+    imgAdd.src = 'resources/Sale.png';
+
+    const lblAdd = document.createElement('h3');
+    lblAdd.textContent = '¡Puedes agregar nuevas ventas!';
+
+    /** Se agrega el ícono al botón */
+    btnAdd.appendChild(imgAdd);
+
+    /** Se agrega botón y título al cuerpo de la carta */
+    cardBodyAdd.appendChild(btnAdd);
+    cardBodyAdd.appendChild(lblAdd);
+
+    cardAdd.appendChild(cardBodyAdd);
+    content.appendChild(cardAdd);
+
+    fetch('http://localhost:8080/ProyectoFinal/rest/ManagementSale/getSales')
+    .then(response => response.json())
+    .then((data) => {
+        console.log("Datos de ventas:", data); 
+        const content = document.getElementById('content');
+        data.forEach(sale => {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            /** Se hace la creación de cada componente */
+            const saleDate = document.createElement('h2');
+            saleDate.className = 'card-title';
+            saleDate.textContent = `Fecha de venta: ${sale.saleDate}`;
+
+            const quantitySold = document.createElement('p');
+            quantitySold.className = 'card-text';
+            quantitySold.textContent = `Cantidad vendida: ${sale.quantitySold}`;
+
+            const unitPrice = document.createElement('p');
+            unitPrice.className = 'card-text';
+            unitPrice.textContent = `Precio por unidad: ${sale.unitPrice}`;
+
+            const customerName = document.createElement('p');
+            customerName.className = 'card-text';
+            customerName.textContent = `Nombre del cliente: ${sale.customerName}`;
+
+            const liqourName = document.createElement('p');
+            liqourName.className = 'card-text';
+            liqourName.textContent = `Nombre del licor: ${sale.liqourName}`;
+
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'button-group';
+
+            const btnEliminar = document.createElement('button');
+            btnEliminar.className = 'btn-danger';
+            btnEliminar.id = `btn-delete-${sale.liqourName}`;
+            btnEliminar.textContent = `Eliminar`;
+            btnEliminar.setAttribute('data-liqour-name', sale.liqourName);
+
+            btnEliminar.addEventListener('click', function() {
+                const liqourName = this.getAttribute('data-liqour-name');
+                deleteSaleByLiqourName(liqourName);
+            });
+
+            const btnActualizar = document.createElement('a');
+            btnActualizar.className = 'btn-success margin';
+            btnActualizar.id = `btn-update-sale-${sale.saleDate}`;
+            btnActualizar.textContent = `Actualizar`;
+
+            btnActualizar.addEventListener('click', function() {
+                localStorage.setItem("saleData", JSON.stringify(sale));
+                window.location.href = "./updatepage.html";
+            });
+
+            // Agregar el botón Consultar
+            const btnConsultar = document.createElement('a');
+            btnConsultar.className = 'btn-info margin';
+            btnConsultar.id = `btn-consult-sale-${sale.saleDate}`;
+            btnConsultar.textContent = `Consultar`;
+
+            btnConsultar.addEventListener('click', function() {
+                localStorage.setItem("saleData", JSON.stringify(sale));
+                window.location.href = "./consultpage.html";
+            });
+
+            buttonGroup.appendChild(btnEliminar);
+            buttonGroup.appendChild(btnActualizar);
+            buttonGroup.appendChild(btnConsultar);
+
+            cardBody.appendChild(saleDate);
+            cardBody.appendChild(quantitySold);
+            cardBody.appendChild(unitPrice);
+            cardBody.appendChild(customerName);
+            cardBody.appendChild(liqourName);
+
+            cardBody.appendChild(buttonGroup);
+
+            card.appendChild(cardBody);
+            content.appendChild(card);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 function cleanContent(){
     console.log("Limpiando contenido");
     const content = document.getElementById('content');
@@ -145,7 +272,7 @@ function cleanContent(){
 
 function deleteLiqourByName(name){
     console.log("Eliminando licor con nombre:", name);
-    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementLiqour/deleteLiqour?name=${name}`;
+    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementLiqour/deleteLiqour?nameLiqour=${encodeURIComponent(name)}`;
     fetch(url, {
         method: 'DELETE'
     })
@@ -162,5 +289,29 @@ function deleteLiqourByName(name){
     })
     .catch(error => {
         console.error('Ocurrió el siguiente error con la operación: ', error);
+    });
+}
+
+function deleteSaleByLiqourName(liqourName) {
+    console.log("Eliminando venta del licor:", liqourName);
+    let url = `http://localhost:8080/ProyectoFinal/rest/ManagementSale/deleteSale?liqourName=${liqourName}`;
+    
+    fetch(url, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Ocurrió un error en la respuesta del servidor: ' + response.statusText);
+        }
+        return response.text().then(text => text ? JSON.parse(text) : {});
+    })
+    .then(data => {
+        alert("Se eliminó el registro de venta");
+        cleanContent();
+        loadSales();
+    })
+    .catch(error => {
+        console.error('Ocurrió el siguiente error con la operación: ', error);
+        alert('Error al eliminar la venta: ' + error.message);
     });
 }

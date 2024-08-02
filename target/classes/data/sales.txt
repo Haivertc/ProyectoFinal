@@ -1,0 +1,6 @@
+11/06/2024;13;2500.0;Eliana;Cerveza
+12/12/2021;20;12234.0;Pedro;Ron
+11/06/2024;13;43000.0;Davo;Aguardiente
+05/07/2019;6;20000.0;Oscar;Ron
+12/12/2021;5;20000.0;Javier;Flor de caña
+19/07/2024;12;12000.0;Jose;Whisky A

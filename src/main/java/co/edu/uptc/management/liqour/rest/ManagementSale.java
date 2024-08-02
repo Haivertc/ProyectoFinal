@@ -50,7 +50,7 @@ public class ManagementSale {
     @Consumes({ MediaType.APPLICATION_JSON })
     public SaleDTO createSale(SaleDTO saleDTO) {
         if (managementPersistenceSale.getListSalesDTO().add(saleDTO)) {
-            managementPersistenceSale.dumpFilePlain("/data/sales.txt");
+            managementPersistenceSale.dumpFilePlain("sales.txt");
             return saleDTO;
         }
         return null;
@@ -68,7 +68,7 @@ public class ManagementSale {
                 sale.setUnitPrice(saleDTO.getUnitPrice());
                 sale.setCustomerName(saleDTO.getCustomerName());
                 sale.setLiqourName(saleDTO.getLiqourName());
-                managementPersistenceSale.dumpFilePlain("/data/sales.txt");
+                managementPersistenceSale.dumpFilePlain("sales.txt");
                 return saleDTO;
             }
         }
@@ -98,7 +98,7 @@ public class ManagementSale {
                     sale.setCustomerName(saleDTO.getCustomerName());
                 }
 
-                managementPersistenceSale.dumpFilePlain("/data/sales.txt");
+                managementPersistenceSale.dumpFilePlain("sales.txt");
                 return saleDTO;
             }
         }
@@ -113,7 +113,7 @@ public class ManagementSale {
         SaleDTO saleDTO = this.getSaleByLiqourName(liqourName);
         if (saleDTO != null) {
             managementPersistenceSale.getListSalesDTO().remove(saleDTO);
-            managementPersistenceSale.dumpFilePlain("/data/sales.txt");
+            managementPersistenceSale.dumpFilePlain("sales.txt");
         }
         return saleDTO;
     }
