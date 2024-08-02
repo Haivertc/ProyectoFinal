@@ -9,6 +9,18 @@ import co.edu.uptc.management.liqour.dto.UserDTO;
 
 public class ManagementPersistenceUser extends FilePlain{
 	private List<UserDTO> listUserDTO = new ArrayList<>();
+	
+	public void dumpFilePlain(String rutaArchivo) {
+        List<String> records = new ArrayList<>();
+        for (UserDTO userDTO : listUserDTO) {
+            StringBuilder contentUser = new StringBuilder();
+            contentUser.append(userDTO.getNameUser()).append(CommonConstants.SEMI_COLON);
+            contentUser.append(userDTO.getPassword());
+            records.add(contentUser.toString());
+        }
+        this.writer(rutaArchivo, records);
+    }
+	
 	public void loadFilePlain(String rutaNombreArchivo) {
 		List<String> contentInLine = this.reader(rutaNombreArchivo);
 		for(String row: contentInLine) {

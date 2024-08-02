@@ -1,10 +1,12 @@
 package co.edu.uptc.management.liqour.rest;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
@@ -35,6 +37,13 @@ public class ManagementUser {
 			e.printStackTrace();
 		}
 	}
+	
+	@GET
+    @Path("/getUsers")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public List<UserDTO> getUsers() {
+        return managementPersistenceUser.getListUserDTO();
+    }
 	
 	@GET
 	@Path("/validateUser")
